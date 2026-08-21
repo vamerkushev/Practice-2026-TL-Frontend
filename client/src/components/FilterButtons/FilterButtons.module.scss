@@ -1,35 +1,17 @@
-$save-background: #3F66BF;
-$clear-background: #FA3A3A;
-$color-text: #FFF;
 $button-width: 200px;
 $button-height: 50px;
-$button-radius: 10px;
 
 .container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    max-inline-size: 410px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-inline-size: 410px;
 }
 
-.default {
-    inline-size: $button-width;
-    block-size: $button-height;
-
-    border: none;
-    border-radius: $button-radius;
-
-    color: $color-text;
-    font: 700 22px/1 Inter, sans-serif;
-    text-align: center;
-
-    cursor: pointer;
-}
-
-.save {
-    background-color: $save-background;
-}
-
-.clear {
-    background-color: $clear-background;
+.button {
+  inline-size: $button-width;
+  block-size: $button-height;
+  font:
+    700 22px/1 Inter,
+    sans-serif;
 }

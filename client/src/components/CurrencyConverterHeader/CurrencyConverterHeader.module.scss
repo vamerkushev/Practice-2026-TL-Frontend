@@ -1,0 +1,28 @@
+$from-color: #767676;
+$to-color: #000;
+$gap: 20px;
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+.from-converter-info,
+.datetime {
+  margin: 0;
+  color: $from-color;
+  font:
+    400 20px/1 Inter,
+    sans-serif;
+  letter-spacing: 0;
+}
+
+.to-converter-info {
+  margin: 0;
+  color: $to-color;
+  font:
+    400 45px/1 Inter,
+    sans-serif;
+  letter-spacing: 0;
+}

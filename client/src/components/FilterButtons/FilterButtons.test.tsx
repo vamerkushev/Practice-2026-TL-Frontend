@@ -1,12 +1,10 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 
-import { FilterButtons } from "./FilterButtons";
+import { FilterButtons } from './FilterButtons';
 
 test('отображает кнопки фильтров', () => {
-    render(
-        <FilterButtons></FilterButtons>
-    )
+  render(<FilterButtons></FilterButtons>);
 
-    expect(screen.getByText('+ SAVE FILTER')).toBeInTheDocument();
-    expect(screen.getByText('CLEAR FILTERS')).toBeInTheDocument();
+  expect(screen.getByText('+ SAVE FILTER')).toBeInTheDocument();
+  expect(screen.getByText('CLEAR FILTERS')).toBeInTheDocument();
 });

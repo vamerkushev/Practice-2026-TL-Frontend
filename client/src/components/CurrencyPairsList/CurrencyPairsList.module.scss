@@ -1,13 +1,10 @@
 $button-width: 95px;
-$button-height: 32px;
+$button-height: 30px;
 
 .container {
-  max-inline-size: 565px;
-}
-
-.buttons-list {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .button {
@@ -16,8 +13,4 @@ $button-height: 32px;
   font:
     400 15px/1 Inter,
     sans-serif;
-}
-
-.chart {
-  padding-block-start: 25px;
 }

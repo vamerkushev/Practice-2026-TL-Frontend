@@ -66,7 +66,7 @@ export default defineConfig([
           caughtErrorsIgnorePattern: '^_'
         }
       ],
-      'import/no-default-export': 'error',
+      'import/no-default-export': 'error'
     }
   },
   eslintConfigPrettier

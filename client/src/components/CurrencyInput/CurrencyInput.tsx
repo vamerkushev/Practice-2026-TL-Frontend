@@ -1,5 +1,5 @@
-import type { Currency } from "../../types/currency";
-import styles from "./CurrencyInput.module.scss";
+import type { Currency } from '../../types/currency';
+import styles from './CurrencyInput.module.scss';
 
 type CurrencyInputProps = {
   amountLabel: string;
@@ -9,13 +9,7 @@ type CurrencyInputProps = {
   currencies: Currency[];
 };
 
-export const CurrencyInput = ({
-  amountLabel,
-  currencyLabel,
-  amount,
-  currencyCode,
-  currencies,
-}: CurrencyInputProps) => {
+export const CurrencyInput = ({ amountLabel, currencyLabel, amount, currencyCode, currencies }: CurrencyInputProps) => {
   return (
     <div className={styles.field}>
       <input
@@ -27,11 +21,7 @@ export const CurrencyInput = ({
         readOnly
       />
 
-      <select
-        className={styles.currency}
-        aria-label={currencyLabel}
-        value={currencyCode}
-      >
+      <select className={styles.currency} aria-label={currencyLabel} value={currencyCode} disabled>
         {currencies.map((currency) => (
           <option key={currency.code} value={currency.code}>
             {currency.code}

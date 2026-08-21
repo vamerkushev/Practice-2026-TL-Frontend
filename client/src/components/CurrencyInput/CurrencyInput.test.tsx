@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 
-import { currencies } from "../../data/currencies";
-import { CurrencyInput } from "../CurrencyInput/CurrencyInput";
+import { currencies } from '../../data/currencies';
+import { CurrencyInput } from '../CurrencyInput/CurrencyInput';
 
-test("показывает переданную сумму", () => {
+test('показывает переданную сумму', () => {
   render(
     <CurrencyInput
       amountLabel="Сколько отдаёте"
@@ -11,13 +11,13 @@ test("показывает переданную сумму", () => {
       amount="1"
       currencyCode="PLN"
       currencies={currencies}
-    />,
+    />
   );
 
-  expect(screen.getByLabelText("Сколько отдаёте")).toHaveValue("1");
+  expect(screen.getByLabelText('Сколько отдаёте')).toHaveValue('1');
 });
 
-test("показывает выбранную валюту", () => {
+test('показывает выбранную валюту', () => {
   render(
     <CurrencyInput
       amountLabel="Сколько отдаёте"
@@ -25,13 +25,13 @@ test("показывает выбранную валюту", () => {
       amount="1"
       currencyCode="PLN"
       currencies={currencies}
-    />,
+    />
   );
 
-  expect(screen.getByLabelText("Валюта, которую отдаёте")).toHaveValue("PLN");
+  expect(screen.getByLabelText('Валюта, которую отдаёте')).toHaveValue('PLN');
 });
 
-test("показывает в списке все переданные валюты", () => {
+test('показывает в списке все переданные валюты', () => {
   render(
     <CurrencyInput
       amountLabel="Сколько отдаёте"
@@ -39,17 +39,15 @@ test("показывает в списке все переданные валю�
       amount="1"
       currencyCode="PLN"
       currencies={currencies}
-    />,
+    />
   );
 
-  const options = screen.getAllByRole("option");
+  const options = screen.getAllByRole('option');
 
-  expect(options.map((option) => option.textContent)).toEqual(
-    currencies.map((currency) => currency.code),
-  );
+  expect(options.map((option) => option.textContent)).toEqual(currencies.map((currency) => currency.code));
 });
 
-test("ничего не зашито внутрь: с другими props показывает другое", () => {
+test('ничего не зашито внутрь: с другими props показывает другое', () => {
   render(
     <CurrencyInput
       amountLabel="Сколько получаете"
@@ -57,9 +55,9 @@ test("ничего не зашито внутрь: с другими props по�
       amount="0.99"
       currencyCode="JPY"
       currencies={currencies}
-    />,
+    />
   );
 
-  expect(screen.getByLabelText("Сколько получаете")).toHaveValue("0.99");
-  expect(screen.getByLabelText("Валюта, которую получаете")).toHaveValue("JPY");
+  expect(screen.getByLabelText('Сколько получаете')).toHaveValue('0.99');
+  expect(screen.getByLabelText('Валюта, которую получаете')).toHaveValue('JPY');
 });
