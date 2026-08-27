@@ -12,7 +12,7 @@ export const CurrencyChart = ({ periods, currentPeriod }: CurrencyChartProps) =>
     <div className={styles.container}>
       <div className={styles[`buttons-list`]}>
         {periods.map((period) => (
-          <Button type={period === currentPeriod ? 'active' : 'default'} className={styles.button}>
+          <Button key={period} type={period === currentPeriod ? 'active' : 'default'} className={styles.button}>
             {period} MIN
           </Button>
         ))}

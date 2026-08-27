@@ -1,6 +1,6 @@
 export type Currency = {
   code: string;
-  title: string;
-  symbol: string;
+  name: string;
   description: string;
+  symbol: string;
 };

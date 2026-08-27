@@ -22,13 +22,13 @@ export const CurrencyInformation = ({ fromCurrency, toCurrency }: CurrencyInform
       </div>
       <div className={styles.block}>
         <h2 className={styles.title}>
-          {fromCurrency.title} - {fromCurrency.code} - {fromCurrency.symbol}
+          {fromCurrency.name} - {fromCurrency.code} - {fromCurrency.symbol}
         </h2>
         <p className={styles.text}>{fromCurrency.description}</p>
       </div>
       <div className={styles.block}>
         <h2 className={styles.title}>
-          {toCurrency.title} - {toCurrency.code} - {toCurrency.symbol}
+          {toCurrency.name} - {toCurrency.code} - {toCurrency.symbol}
         </h2>
         <p className={styles.text}>{toCurrency.description}</p>
       </div>

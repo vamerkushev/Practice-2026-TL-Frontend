@@ -21,10 +21,10 @@ export const CurrencyConverterHeader = ({
   return (
     <div className={styles.header}>
       <p className={styles['from-converter-info']}>
-        {fromAmountCurrency} {fromCurrency.title} is
+        {fromAmountCurrency} {fromCurrency.name} is
       </p>
       <p className={styles['to-converter-info']}>
-        {toAmountCurrency} {toCurrency.title}
+        {toAmountCurrency} {toCurrency.name}
       </p>
       <p className={styles.datetime}>
         {date} {time}

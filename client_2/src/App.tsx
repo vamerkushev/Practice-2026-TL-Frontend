@@ -5,7 +5,7 @@ import { FilterButtons } from './components/FilterButtons/FilterButtons';
 import { CurrencyChart } from './components/CurrencyChart/CurrencyChart';
 import { CurrencyPairsList } from './components/CurrencyPairsList/CurrencyPairsList';
 import { CurrencyInformation } from './components/CurrencyInformation/CurrencyInformation';
-import { currencies, getCurrency } from '../src/data/currencies';
+import { currenciesMocks, getCurrency } from '../src/mocks/currenciesMocks';
 import { currencyPairs } from '../src/data/currencyPairs';
 import { chartPeriods } from './data/chartPeriods';
 
@@ -28,7 +28,7 @@ export const App = () => {
             currencyLabel="Валюта, которую отдаёте"
             amount="1"
             currencyCode={getCurrency('PLN').code}
-            currencies={currencies}
+            currencies={currenciesMocks}
           />
 
           <CurrencyInput
@@ -36,7 +36,7 @@ export const App = () => {
             currencyLabel="Валюта, которую получаете"
             amount="0.99"
             currencyCode={getCurrency('JPY').code}
-            currencies={currencies}
+            currencies={currenciesMocks}
           />
 
           <FilterButtons />
