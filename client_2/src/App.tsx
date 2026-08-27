@@ -43,6 +43,7 @@ export const App = () => {
             currencies={currenciesMocks}
             onAmountChange={setAmountFromCurrency}
             onCurrencyChange={setFromCurrencyCode}
+            selectedCurrency={toCurrencyCode}
           />
 
           <CurrencyInput
@@ -53,6 +54,7 @@ export const App = () => {
             currencies={currenciesMocks}
             onCurrencyChange={setToCurrencyCode}
             readonly={true}
+            selectedCurrency={fromCurrencyCode}
           />
 
           <FilterButtons />

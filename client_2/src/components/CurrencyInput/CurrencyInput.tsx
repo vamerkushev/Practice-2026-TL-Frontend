@@ -10,6 +10,7 @@ type CurrencyInputProps = {
   onAmountChange?: (value: string) => void;
   onCurrencyChange?: (value: string) => void;
   readonly?: boolean;
+  selectedCurrency: string;
 };
 
 export const CurrencyInput = ({
@@ -20,7 +21,8 @@ export const CurrencyInput = ({
   currencies,
   onAmountChange,
   onCurrencyChange,
-  readonly = false
+  readonly = false,
+  selectedCurrency
 }: CurrencyInputProps) => {
   return (
     <div className={styles.field}>
@@ -41,7 +43,7 @@ export const CurrencyInput = ({
         onChange={(event) => onCurrencyChange?.(event.target.value)}
       >
         {currencies.map((currency) => (
-          <option key={currency.code} value={currency.code}>
+          <option key={currency.code} value={currency.code} disabled={currency.code === selectedCurrency}>
             {currency.code}
           </option>
         ))}
