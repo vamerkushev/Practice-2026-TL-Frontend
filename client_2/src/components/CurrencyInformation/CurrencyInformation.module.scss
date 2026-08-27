@@ -1,0 +1,57 @@
+$button-width: 215px;
+$button-height: 50px;
+$line-background: #d9d9d9;
+$bold-text-color: #000;
+$default-text-color: #767676;
+
+.header {
+  display: flex;
+  gap: 0;
+  align-items: center;
+  max-inline-size: 100%;
+}
+
+.button {
+  position: relative;
+
+  inline-size: 100%;
+  max-inline-size: $button-width;
+  block-size: $button-height;
+
+  font:
+    400 20px/1 Inter,
+    sans-serif;
+}
+
+.line {
+  flex: 1;
+  block-size: 1px;
+  background-color: $line-background;
+}
+
+.arrow {
+  margin-inline-start: 5px;
+}
+
+.block {
+  max-inline-size: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.title {
+  margin-block-end: 15px;
+  color: $bold-text-color;
+  font:
+    700 25px/1 Inter,
+    sans-serif;
+}
+
+.text {
+  margin-block-start: 0;
+  padding: 0;
+  color: $default-text-color;
+  font:
+    400 20px/1.1 Inter,
+    sans-serif;
+}
