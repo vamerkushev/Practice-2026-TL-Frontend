@@ -7,9 +7,21 @@ type CurrencyInputProps = {
   amount: string;
   currencyCode: string;
   currencies: Currency[];
+  onAmountChange?: (value: string) => void;
+  onCurrencyChange?: (value: string) => void;
+  readonly?: boolean;
 };
 
-export const CurrencyInput = ({ amountLabel, currencyLabel, amount, currencyCode, currencies }: CurrencyInputProps) => {
+export const CurrencyInput = ({
+  amountLabel,
+  currencyLabel,
+  amount,
+  currencyCode,
+  currencies,
+  onAmountChange,
+  onCurrencyChange,
+  readonly = false
+}: CurrencyInputProps) => {
   return (
     <div className={styles.field}>
       <input
@@ -18,10 +30,16 @@ export const CurrencyInput = ({ amountLabel, currencyLabel, amount, currencyCode
         inputMode="decimal"
         aria-label={amountLabel}
         value={amount}
-        readOnly
+        onChange={(event) => onAmountChange?.(event.target.value)}
+        readOnly={readonly}
       />
 
-      <select className={styles.currency} aria-label={currencyLabel} value={currencyCode} disabled>
+      <select
+        className={styles.currency}
+        aria-label={currencyLabel}
+        value={currencyCode}
+        onChange={(event) => onCurrencyChange?.(event.target.value)}
+      >
         {currencies.map((currency) => (
           <option key={currency.code} value={currency.code}>
             {currency.code}
