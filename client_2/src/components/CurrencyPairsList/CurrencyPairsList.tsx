@@ -13,7 +13,7 @@ export const CurrencyPairsList = ({ pairs, activePair }: CurrencyPairsListProps)
       {pairs.map(({ fromCurrency, toCurrency }) => {
         const pair = `${fromCurrency}/${toCurrency}`;
         return (
-          <Button key={pair} type={pair === activePair ? 'active' : 'default'} className={styles.button}>
+          <Button key={pair} kind={pair === activePair ? 'active' : 'default'} className={styles.button}>
             {pair}
           </Button>
         );

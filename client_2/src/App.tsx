@@ -10,6 +10,7 @@ import { currencyPairs } from '../src/data/currencyPairs';
 import { chartPeriods } from './data/chartPeriods';
 import { useState } from 'react';
 import { useCurrencyConverter } from './hooks/useCurrencyConverter';
+import { CurrenciesSwapButton } from './components/CurrenciesSwapButton/CurrenciesSwapButton';
 
 export const App = () => {
   const [fromCurrencyCode, setFromCurrencyCode] = useState('CAD');
@@ -21,6 +22,11 @@ export const App = () => {
     toCurrencyCode,
     amountFromCurrency
   );
+
+  const swapCurrencies = () => {
+    setFromCurrencyCode(toCurrencyCode);
+    setToCurrencyCode(fromCurrencyCode);
+  };
 
   return (
     <main className={styles.page}>
@@ -45,6 +51,8 @@ export const App = () => {
             onCurrencyChange={setFromCurrencyCode}
             selectedCurrency={toCurrencyCode}
           />
+
+          <CurrenciesSwapButton onClick={swapCurrencies} />
 
           <CurrencyInput
             amountLabel="Сколько получаете"

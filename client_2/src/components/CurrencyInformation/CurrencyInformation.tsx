@@ -12,7 +12,7 @@ export const CurrencyInformation = ({ fromCurrency, toCurrency }: CurrencyInform
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Button type="default" className={styles.button}>
+        <Button kind="default" className={styles.button}>
           <span>
             {fromCurrency.code}/{toCurrency.code}: about{' '}
           </span>

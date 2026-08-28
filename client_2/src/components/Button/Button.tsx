@@ -2,11 +2,15 @@ import styles from './Button.module.scss';
 import type { ReactNode } from 'react';
 
 type ButtonProps = {
-  type?: 'default' | 'active' | 'save' | 'clear';
+  kind?: 'default' | 'active' | 'save' | 'clear';
   className?: string;
   children: ReactNode;
-};
+} & React.ComponentProps<'button'>;
 
-export const Button = ({ type = 'default', className = '', children }: ButtonProps) => {
-  return <button className={`${styles.button} ${styles[type]} ${className}`}>{children}</button>;
+export const Button = ({ kind = 'default', className = '', children, ...props }: ButtonProps) => {
+  return (
+    <button className={`${styles.button} ${styles[kind]} ${className}`} {...props}>
+      {children}
+    </button>
+  );
 };
