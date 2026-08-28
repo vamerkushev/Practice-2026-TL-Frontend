@@ -75,7 +75,13 @@ export const App = () => {
       <div className={styles['bottom-half']}>
         <CurrencyPairsList pairs={currencyPairs} activePair={`${fromCurrencyCode}/${toCurrencyCode}`} />
 
-        <CurrencyInformation fromCurrency={fromCurrency} toCurrency={toCurrency} />
+        <CurrencyInformation
+          key={`${fromCurrencyCode}-${toCurrencyCode}`}
+          fromCurrency={fromCurrency}
+          toCurrency={toCurrency}
+        />
+        {/* Изменении валютной пары меняет key и приводит к пересозданию компонента. Так как внутри компонента есть хук useState,
+        который сбросит значение isShown, описание при выборе новой валютной пары будет закрыто */}
       </div>
     </main>
   );
