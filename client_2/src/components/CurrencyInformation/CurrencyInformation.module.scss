@@ -33,6 +33,10 @@ $default-text-color: #767676;
   margin-inline-start: 5px;
 }
 
+.arrow-closed {
+  transform: rotate(180deg);
+}
+
 .block {
   max-inline-size: 100%;
   margin: 0;
@@ -54,4 +58,14 @@ $default-text-color: #767676;
   font:
     400 20px/1.1 Inter,
     sans-serif;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.content-hidden {
+  block-size: 0;
+  visibility: hidden;
 }
