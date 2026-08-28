@@ -10,7 +10,7 @@ type CurrencyInputProps = {
   onAmountChange?: (value: string) => void;
   onCurrencyChange?: (value: string) => void;
   readonly?: boolean;
-  selectedCurrency: string;
+  selectedCurrency?: string;
 };
 
 export const CurrencyInput = ({

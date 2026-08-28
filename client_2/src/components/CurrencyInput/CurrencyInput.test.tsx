@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 
-import { currencies } from '../../data/currencies';
+import { currenciesMocks } from '../../mocks/currenciesMocks';
 import { CurrencyInput } from '../CurrencyInput/CurrencyInput';
 
 test('показывает переданную сумму', () => {
@@ -10,7 +10,7 @@ test('показывает переданную сумму', () => {
       currencyLabel="Валюта, которую отдаёте"
       amount="1"
       currencyCode="PLN"
-      currencies={currencies}
+      currencies={currenciesMocks}
     />
   );
 
@@ -24,7 +24,7 @@ test('показывает выбранную валюту', () => {
       currencyLabel="Валюта, которую отдаёте"
       amount="1"
       currencyCode="PLN"
-      currencies={currencies}
+      currencies={currenciesMocks}
     />
   );
 
@@ -38,13 +38,13 @@ test('показывает в списке все переданные валю�
       currencyLabel="Валюта, которую отдаёте"
       amount="1"
       currencyCode="PLN"
-      currencies={currencies}
+      currencies={currenciesMocks}
     />
   );
 
   const options = screen.getAllByRole('option');
 
-  expect(options.map((option) => option.textContent)).toEqual(currencies.map((currency) => currency.code));
+  expect(options.map((option) => option.textContent)).toEqual(currenciesMocks.map((currency) => currency.code));
 });
 
 test('ничего не зашито внутрь: с другими props показывает другое', () => {
@@ -54,7 +54,7 @@ test('ничего не зашито внутрь: с другими props по�
       currencyLabel="Валюта, которую получаете"
       amount="0.99"
       currencyCode="JPY"
-      currencies={currencies}
+      currencies={currenciesMocks}
     />
   );
 

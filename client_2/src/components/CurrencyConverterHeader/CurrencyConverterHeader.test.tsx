@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { getCurrency } from '../../data/currencies';
+import { getCurrency } from '../../mocks/currenciesMocks';
 
 import { CurrencyConverterHeader } from './CurrencyConverterHeader';
 
@@ -10,12 +10,11 @@ test('отображает заголовок текущей валютной п
       fromCurrency={getCurrency('PLN')}
       toAmountCurrency="0.99"
       toCurrency={getCurrency('JPY')}
-      date="Fri, 05 Apr 2026"
-      time="10:35 UTC"
+      updatedAt="2026-04-27T09:30:00.000Z"
     />
   );
 
   expect(screen.getByText('1 Polish zloty is')).toBeInTheDocument();
   expect(screen.getByText('0.99 Japanese yen')).toBeInTheDocument();
-  expect(screen.getByText('Fri, 05 Apr 2026 10:35 UTC')).toBeInTheDocument();
+  expect(screen.getByText('27 Apr 2026, 09:30:00 UTC')).toBeInTheDocument();
 });

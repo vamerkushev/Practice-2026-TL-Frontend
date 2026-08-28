@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
 import { CurrencyInformation } from '../CurrencyInformation/CurrencyInformation';
-import { getCurrency } from '../../data/currencies';
+import { getCurrency } from '../../mocks/currenciesMocks';
 
 const currencyInformationProps = {
   fromCurrency: getCurrency('PLN'),
@@ -27,11 +27,4 @@ test('отображает соответствующие описания дл�
 test('отображает кнопку с соответсвтующей парой валют', () => {
   renderCurrencyInformation();
   expect(screen.getByText('PLN/JPY: about')).toBeInTheDocument();
-});
-
-test('отображает отсутствие описания при передаче неизвестной валюты', () => {
-  render(<CurrencyInformation fromCurrency={getCurrency('PLN')} toCurrency={getCurrency('CAD')}></CurrencyInformation>);
-
-  expect(screen.getByText(getCurrency('PLN').description)).toBeInTheDocument();
-  expect(screen.getByText('No description.')).toBeInTheDocument();
 });

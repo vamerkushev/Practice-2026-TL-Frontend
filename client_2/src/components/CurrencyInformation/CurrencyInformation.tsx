@@ -15,7 +15,12 @@ export const CurrencyInformation = ({ fromCurrency, toCurrency }: CurrencyInform
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Button kind="default" className={styles.button} onClick={() => setIsShown((value) => !value)}>
+        <Button
+          kind="default"
+          className={styles.button}
+          onClick={() => setIsShown((value) => !value)}
+          data-testid="about-button"
+        >
           <span>
             {fromCurrency.code}/{toCurrency.code}: about{' '}
           </span>

@@ -13,8 +13,8 @@ import { useCurrencyConverter } from './hooks/useCurrencyConverter';
 import { CurrenciesSwapButton } from './components/CurrenciesSwapButton/CurrenciesSwapButton';
 
 export const App = () => {
-  const [fromCurrencyCode, setFromCurrencyCode] = useState('CAD');
-  const [toCurrencyCode, setToCurrencyCode] = useState('PLN');
+  const [fromCurrencyCode, setFromCurrencyCode] = useState('PLN');
+  const [toCurrencyCode, setToCurrencyCode] = useState('JPY');
   const [amountFromCurrency, setAmountFromCurrency] = useState('1');
 
   const { fromCurrency, toCurrency, amountToCurrency, updatedAt } = useCurrencyConverter(
@@ -26,6 +26,17 @@ export const App = () => {
   const swapCurrencies = () => {
     setFromCurrencyCode(toCurrencyCode);
     setToCurrencyCode(fromCurrencyCode);
+  };
+
+  const setValidAmountChange = (value: string) => {
+    if (value === '') {
+      setAmountFromCurrency(value);
+      return;
+    }
+    const num = Number(value);
+    if (!isNaN(num) && num >= 0) {
+      setAmountFromCurrency(value);
+    }
   };
 
   return (
@@ -46,7 +57,7 @@ export const App = () => {
             amount={amountFromCurrency}
             currencyCode={fromCurrencyCode}
             currencies={currenciesMocks}
-            onAmountChange={setAmountFromCurrency}
+            onAmountChange={setValidAmountChange}
             onCurrencyChange={setFromCurrencyCode}
             selectedCurrency={toCurrencyCode}
           />
