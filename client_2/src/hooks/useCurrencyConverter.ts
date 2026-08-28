@@ -10,6 +10,7 @@ export const useCurrencyConverter = (
   fromCurrency: Currency;
   toCurrency: Currency;
   amountToCurrency: string;
+  updatedAt: string;
 } => {
   const courseSelectedPairs = priceChangesMocks[fromCurrencyCode]?.[toCurrencyCode]?.price;
   const amountToCurrency = (Number(amountFromCurrency) * courseSelectedPairs).toFixed(2);
@@ -17,5 +18,7 @@ export const useCurrencyConverter = (
   const fromCurrency = getCurrency(fromCurrencyCode);
   const toCurrency = getCurrency(toCurrencyCode);
 
-  return { fromCurrency, toCurrency, amountToCurrency };
+  const updatedAt = priceChangesMocks[fromCurrencyCode]?.[toCurrencyCode]?.dateTime;
+
+  return { fromCurrency, toCurrency, amountToCurrency, updatedAt };
 };

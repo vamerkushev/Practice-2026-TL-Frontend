@@ -17,7 +17,7 @@ export const App = () => {
   const [toCurrencyCode, setToCurrencyCode] = useState('PLN');
   const [amountFromCurrency, setAmountFromCurrency] = useState('1');
 
-  const { fromCurrency, toCurrency, amountToCurrency } = useCurrencyConverter(
+  const { fromCurrency, toCurrency, amountToCurrency, updatedAt } = useCurrencyConverter(
     fromCurrencyCode,
     toCurrencyCode,
     amountFromCurrency
@@ -37,8 +37,7 @@ export const App = () => {
             fromCurrency={fromCurrency}
             toAmountCurrency={amountToCurrency}
             toCurrency={toCurrency}
-            date="Fri, 05 Apr 2026"
-            time="10:35 UTC"
+            updatedAt={updatedAt}
           />
 
           <CurrencyInput

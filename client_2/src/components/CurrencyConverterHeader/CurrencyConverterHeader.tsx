@@ -6,8 +6,21 @@ type CurrencyConverterHeaderProps = {
   fromCurrency: Currency;
   toAmountCurrency: string;
   toCurrency: Currency;
-  date: string;
-  time: string;
+  updatedAt: string;
+};
+
+const parseDate = (value: string) => {
+  if (!value) {
+    return 'The date is missing!';
+  }
+
+  const date = new Date(value);
+
+  return date.toLocaleString('en-GB', {
+    dateStyle: 'medium',
+    timeStyle: 'long',
+    timeZone: 'UTC'
+  });
 };
 
 export const CurrencyConverterHeader = ({
@@ -15,8 +28,7 @@ export const CurrencyConverterHeader = ({
   fromCurrency,
   toAmountCurrency,
   toCurrency,
-  date,
-  time
+  updatedAt
 }: CurrencyConverterHeaderProps) => {
   return (
     <div className={styles.header}>
@@ -26,9 +38,7 @@ export const CurrencyConverterHeader = ({
       <p className={styles['to-converter-info']}>
         {toAmountCurrency} {toCurrency.name}
       </p>
-      <p className={styles.datetime}>
-        {date} {time}
-      </p>
+      <p className={styles.datetime}>{parseDate(updatedAt)}</p>
     </div>
   );
 };
