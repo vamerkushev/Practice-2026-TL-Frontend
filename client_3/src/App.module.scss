@@ -1,0 +1,47 @@
+$page-padding: 40px;
+$page-color: #fff;
+$page-max-width: 1258px;
+$page-radius: 30px;
+
+.page {
+  display: flex;
+  flex-direction: column;
+
+  max-inline-size: $page-max-width;
+  block-size: auto;
+  margin: 0 auto;
+  padding: $page-padding;
+
+  background-color: $page-color;
+  border-radius: $page-radius;
+}
+
+.top-half {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.bottom-half {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  inline-size: 100%;
+  padding-block-start: 20px;
+}
+
+.left-column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.right-column {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  justify-content: flex-end;
+}

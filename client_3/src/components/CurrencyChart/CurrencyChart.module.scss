@@ -1,0 +1,23 @@
+$button-width: 95px;
+$button-height: 32px;
+
+.container {
+  max-inline-size: 565px;
+}
+
+.buttons-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button {
+  inline-size: $button-width;
+  block-size: $button-height;
+  font:
+    400 15px/1 Inter,
+    sans-serif;
+}
+
+.chart {
+  padding-block-start: 25px;
+}
