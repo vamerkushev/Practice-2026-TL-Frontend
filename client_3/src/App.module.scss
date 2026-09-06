@@ -1,6 +1,7 @@
 $page-padding: 40px;
 $page-color: #fff;
 $page-max-width: 1258px;
+$page-max-height: 411px;
 $page-radius: 30px;
 
 .page {
@@ -44,4 +45,17 @@ $page-radius: 30px;
   flex-direction: column;
   gap: 12px;
   justify-content: flex-end;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  inline-size: $page-max-width;
+  block-size: $page-max-height;
+  margin: auto;
+
+  background: $page-color;
+  border-radius: $page-radius;
 }

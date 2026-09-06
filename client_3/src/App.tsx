@@ -9,6 +9,9 @@ import { currencyPairs } from '../src/data/currencyPairs';
 import { chartPeriods } from './data/chartPeriods';
 import { CurrenciesSwapButton } from './components/CurrenciesSwapButton/CurrenciesSwapButton';
 import { useConverter } from './hooks/useConverter';
+import { Loading } from './components/Loading/Loading';
+import { Toast } from './components/Toast/Toast';
+import { ServerError } from './components/ServerError/ServerError';
 
 export const App = () => {
   const {
@@ -24,19 +27,32 @@ export const App = () => {
     setValidAmountChange,
     swapCurrencies,
     updatedAt,
-    pricesLoading
+    pricesLoading,
+    currenciesLoading,
+    pricesError,
+    currenciesError
   } = useConverter();
 
-  if (!fromCurrency || !toCurrency) {
+  if (currenciesLoading) {
     return (
-      <div className={styles.page}>
-        <p>Загрузка данных</p>
+      <div className={styles.loading}>
+        <Loading />
       </div>
     );
   }
 
+  if (currenciesError) {
+    return <ServerError message="Не удалось загрузить данные! Проверьте соединение с сервером!" />;
+  }
+
+  if (!fromCurrency || !toCurrency) {
+    return null;
+  }
+
   return (
     <main className={styles.page}>
+      {pricesError && <Toast message={`Ошибка загрузки курсов: ${pricesError}`!} />}
+
       <div className={styles['top-half']}>
         <div className={styles['left-column']}>
           <CurrencyConverterHeader
