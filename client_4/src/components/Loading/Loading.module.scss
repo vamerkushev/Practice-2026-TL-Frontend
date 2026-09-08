@@ -1,0 +1,38 @@
+.loading {
+  inline-size: 100%;
+
+  color: black;
+  font:
+    700 22px / 100% Inter,
+    sans-serif;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.slash1,
+.slash2,
+.slash3 {
+  display: inline-block;
+  opacity: 0;
+  animation: loading 1.5s infinite;
+}
+
+.slash2 {
+  animation-delay: 0.5s;
+}
+
+.slash3 {
+  animation-delay: 1s;
+}
+
+@keyframes loading {
+  0%,
+  33% {
+    opacity: 0;
+  }
+
+  66%,
+  100% {
+    opacity: 1;
+  }
+}
