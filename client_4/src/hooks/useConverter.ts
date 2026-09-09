@@ -6,6 +6,9 @@ import { mapPriceChangeDtoToPriceChange } from '../mappers/priceChangeMapper';
 import type { Currency } from '../types/currency';
 import type { PriceChanges } from '../types/priceChanges';
 
+const DEFAULT_PERIOD = 3;
+const UPDATE_INTERVAL_MS = 10000;
+
 export function useConverter() {
   const { state: currenciesState, dispatch: currenciesDispatch } = useDataReducer<Currency[]>();
   const { state: pricesState, dispatch: pricesDispatch } = useDataReducer<PriceChanges[]>();
@@ -21,7 +24,8 @@ export function useConverter() {
   const updatedAt = latestPrice?.dateTime ?? new Date().toISOString();
   const rate = latestPrice?.price ?? 0;
 
-  const LAST_TIME = 30000;
+  const [period, setPeriod] = useState(DEFAULT_PERIOD);
+  const LAST_TIME = period * 60 * 1000;
 
   const amountToCurrency = useMemo(() => {
     if (rate && amountFromCurrency && !isNaN(Number(amountFromCurrency))) {
@@ -30,7 +34,13 @@ export function useConverter() {
     return '0';
   }, [amountFromCurrency, rate]);
 
+  const handlePeriodChange = (newPeriod: number) => {
+    setPeriod(newPeriod);
+  };
+
   useEffect(() => {
+    const abortController = new AbortController();
+
     const load = async () => {
       currenciesDispatch({ type: 'LOADING' });
       try {
@@ -52,29 +62,59 @@ export function useConverter() {
       }
     };
     load();
+    return () => abortController.abort();
   }, [currenciesDispatch]);
 
   useEffect(() => {
     if (!fromCurrencyCode || !toCurrencyCode) return;
 
+    let currentController: AbortController | null = null;
+
     const load = async () => {
+      if (currentController) {
+        currentController.abort();
+      }
+
+      const controller = new AbortController();
+      currentController = controller;
+
       pricesDispatch({ type: 'LOADING' });
       try {
         //throw new Error('Test error'); //тоже быстрый тест ошибки toast
         const fromDateTime = new Date(Date.now() - LAST_TIME).toISOString();
-        const dtoList = await getPriceHistory(fromCurrencyCode, toCurrencyCode, fromDateTime);
+        const dtoList = await getPriceHistory(
+          fromCurrencyCode,
+          toCurrencyCode,
+          fromDateTime,
+          undefined,
+          controller.signal
+        );
+
+        if (controller.signal.aborted) return;
+
         const priceChanges = dtoList.map(mapPriceChangeDtoToPriceChange);
 
         pricesDispatch({ type: 'SUCCESS', payload: priceChanges });
       } catch (e) {
+        if (controller.signal.aborted) return;
         pricesDispatch({
           type: 'ERROR',
           payload: (e as Error).message || 'Ошибка загрузки курсов'
         });
       }
     };
+
     load();
-  }, [fromCurrencyCode, toCurrencyCode, pricesDispatch]);
+
+    const interval = setInterval(load, UPDATE_INTERVAL_MS);
+
+    return () => {
+      clearInterval(interval);
+      if (currentController) {
+        currentController.abort();
+      }
+    };
+  }, [fromCurrencyCode, toCurrencyCode, pricesDispatch, period]);
 
   const setFromCurrencyCode = (code: string) => {
     setFromCode(code);
@@ -122,6 +162,9 @@ export function useConverter() {
     pricesLoading: pricesState.loading,
     currenciesLoading: currenciesState.loading,
     pricesError: pricesState.error,
-    currenciesError: currenciesState.error
+    currenciesError: currenciesState.error,
+    period,
+    handlePeriodChange,
+    pricesState
   };
 }

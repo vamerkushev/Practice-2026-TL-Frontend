@@ -6,7 +6,6 @@ import { CurrencyChart } from './components/CurrencyChart/CurrencyChart';
 import { CurrencyPairsList } from './components/CurrencyPairsList/CurrencyPairsList';
 import { CurrencyInformation } from './components/CurrencyInformation/CurrencyInformation';
 import { currencyPairs } from '../src/data/currencyPairs';
-import { chartPeriods } from './data/chartPeriods';
 import { CurrenciesSwapButton } from './components/CurrenciesSwapButton/CurrenciesSwapButton';
 import { useConverter } from './hooks/useConverter';
 import { Loading } from './components/Loading/Loading';
@@ -30,7 +29,10 @@ export const App = () => {
     pricesLoading,
     currenciesLoading,
     pricesError,
-    currenciesError
+    currenciesError,
+    period,
+    handlePeriodChange,
+    pricesState
   } = useConverter();
 
   if (currenciesLoading) {
@@ -90,7 +92,13 @@ export const App = () => {
           <FilterButtons />
         </div>
         <div className={styles['right-column']}>
-          <CurrencyChart periods={chartPeriods} currentPeriod={4} />
+          <CurrencyChart
+            period={period}
+            data={pricesState.data ?? []}
+            isLoading={pricesState.loading}
+            error={pricesState.error}
+            onPeriodChange={handlePeriodChange}
+          />
         </div>
       </div>
 

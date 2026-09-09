@@ -18,7 +18,8 @@ export const getPriceHistory = async (
   paymentCurrency: string,
   purchasedCurrency: string,
   fromDateTime: string,
-  toDateTime?: string
+  toDateTime?: string,
+  signal?: AbortSignal
 ): Promise<PriceChangeDto[]> => {
   const params: Record<string, string> = {
     paymentCurrency,
@@ -28,6 +29,6 @@ export const getPriceHistory = async (
   if (toDateTime) {
     params.toDateTime = toDateTime;
   }
-  const response = await apiClient.get<PriceChangeDto[]>('/prices', { params });
+  const response = await apiClient.get<PriceChangeDto[]>('/prices', { params, signal });
   return response.data;
 };
