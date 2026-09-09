@@ -1,0 +1,17 @@
+$button-width: 200px;
+$button-height: 50px;
+
+.container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-inline-size: 410px;
+}
+
+.button {
+  inline-size: $button-width;
+  block-size: $button-height;
+  font:
+    700 22px/1 Inter,
+    sans-serif;
+}
