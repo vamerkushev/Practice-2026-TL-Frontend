@@ -32,7 +32,7 @@ test('диспатч ERROR - заипсь error', () => {
   expect(result.current.state).toEqual({ data: null, loading: false, error: 'Error' });
 });
 
-test('последовательность вызовов LOADING, SUCCESS, LOADING - сброс data', () => {
+test('последовательность вызовов LOADING, SUCCESS, LOADING - сохранение data', () => {
   const { result } = renderHook(() => useDataReducer<string[]>());
 
   act(() => result.current.dispatch({ type: 'LOADING' }));
@@ -41,7 +41,7 @@ test('последовательность вызовов LOADING, SUCCESS, LOAD
   expect(result.current.state.data).toEqual(['RUB']);
   act(() => result.current.dispatch({ type: 'LOADING' }));
 
-  expect(result.current.state.data).toBeNull();
+  expect(result.current.state.data).toEqual(['RUB']);
   expect(result.current.state.loading).toBe(true);
   expect(result.current.state.error).toBeNull();
 });
