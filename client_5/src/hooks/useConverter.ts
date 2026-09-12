@@ -8,6 +8,7 @@ import type { PriceChanges } from '../types/priceChanges';
 
 const DEFAULT_PERIOD = 3;
 const UPDATE_INTERVAL_MS = 10000;
+const MS_IN_MINITE = 60 * 1000;
 
 export function useConverter() {
   const { state: currenciesState, dispatch: currenciesDispatch } = useDataReducer<Currency[]>();
@@ -25,7 +26,7 @@ export function useConverter() {
   const rate = latestPrice?.price ?? 0;
 
   const [period, setPeriod] = useState(DEFAULT_PERIOD);
-  const LAST_TIME = period * 60 * 1000;
+  const LAST_TIME = period * MS_IN_MINITE;
 
   const amountToCurrency = useMemo(() => {
     if (rate && amountFromCurrency && !isNaN(Number(amountFromCurrency))) {
@@ -63,7 +64,7 @@ export function useConverter() {
     };
     load();
     return () => abortController.abort();
-  }, [currenciesDispatch]);
+  }, [currenciesDispatch, fromCurrencyCode, toCurrencyCode]);
 
   useEffect(() => {
     if (!fromCurrencyCode || !toCurrencyCode) return;

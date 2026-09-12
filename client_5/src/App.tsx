@@ -5,12 +5,12 @@ import { FilterButtons } from './components/FilterButtons/FilterButtons';
 import { CurrencyChart } from './components/CurrencyChart/CurrencyChart';
 import { CurrencyPairsList } from './components/CurrencyPairsList/CurrencyPairsList';
 import { CurrencyInformation } from './components/CurrencyInformation/CurrencyInformation';
-import { currencyPairs } from '../src/data/currencyPairs';
 import { CurrenciesSwapButton } from './components/CurrenciesSwapButton/CurrenciesSwapButton';
 import { useConverter } from './hooks/useConverter';
 import { Loading } from './components/Loading/Loading';
 import { Toast } from './components/Toast/Toast';
 import { ServerError } from './components/ServerError/ServerError';
+import { useSavedFilters } from './hooks/useSavedFilters';
 
 export const App = () => {
   const {
@@ -34,6 +34,8 @@ export const App = () => {
     handlePeriodChange,
     pricesState
   } = useConverter();
+
+  const { filters, addFilter, clearFilters } = useSavedFilters();
 
   if (currenciesLoading) {
     return (
@@ -89,7 +91,7 @@ export const App = () => {
             selectedCurrency={fromCurrencyCode}
           />
 
-          <FilterButtons />
+          <FilterButtons onSave={() => addFilter(fromCurrencyCode, toCurrencyCode)} onClear={clearFilters} />
         </div>
         <div className={styles['right-column']}>
           <CurrencyChart
@@ -103,7 +105,14 @@ export const App = () => {
       </div>
 
       <div className={styles['bottom-half']}>
-        <CurrencyPairsList pairs={currencyPairs} activePair={`${fromCurrencyCode}/${toCurrencyCode}`} />
+        <CurrencyPairsList
+          pairs={filters}
+          activePair={`${fromCurrencyCode}/${toCurrencyCode}`}
+          onSelect={(from, to) => {
+            setFromCurrencyCode(from);
+            setToCurrencyCode(to);
+          }}
+        />
 
         <CurrencyInformation
           key={`${fromCurrencyCode}-${toCurrencyCode}`}
