@@ -35,7 +35,7 @@ export const App = () => {
     pricesState
   } = useConverter();
 
-  const { filters, addFilter, clearFilters } = useSavedFilters();
+  const { filters, addFilter, clearFilters } = useSavedFilters(currencies);
 
   if (currenciesLoading) {
     return (

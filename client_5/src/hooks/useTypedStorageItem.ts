@@ -28,7 +28,14 @@ export function useTypedStorageItem<S extends TypedStorageValue, K extends Extra
 
   const value = useSyncExternalStore(subscribe, getSnapshot, () => null);
 
-  const set = useCallback((val: S[K]) => storage.set(key, val), [key, storage]);
+  const set = useCallback(
+    (val: S[K] | ((prev: S[K] | null) => S[K])) => {
+      const newValue = typeof val === 'function' ? (val as (prev: S[K] | null) => S[K])(storage.get(key)) : val;
+
+      storage.set(key, newValue);
+    },
+    [key, storage]
+  );
 
   const remove = useCallback(() => storage.remove(key), [key, storage]);
 
