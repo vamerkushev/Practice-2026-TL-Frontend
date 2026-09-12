@@ -14,6 +14,7 @@ const mockedGetCurrencies = vi.mocked(getCurrencies);
 const mockedGetPriceHistory = vi.mocked(getPriceHistory);
 
 beforeEach(() => {
+  window.localStorage.clear();
   vi.clearAllMocks();
   mockedGetCurrencies.mockResolvedValue(currenciesMocks);
   mockedGetPriceHistory.mockImplementation((paymentCurrency: string, purchasedCurrency: string) => {
@@ -74,13 +75,13 @@ test('пересчёт конвертации при изменении пары
   expect(await screen.findByText('36.05 Japanese yen')).toBeInTheDocument();
 
   const fromSelect = screen.getByLabelText('Валюта, которую отдаёте') as HTMLSelectElement;
-  const toSelect = screen.getByLabelText('Валюта, которую получаете') as HTMLSelectElement;
-  const toAmountInput = screen.getByLabelText('Сколько получаете') as HTMLInputElement;
 
   expect(fromSelect.value).toEqual('PLN');
   fireEvent.change(fromSelect, { target: { value: 'ZAR' } });
 
   await waitFor(() => {
+    const toSelect = screen.getByLabelText('Валюта, которую получаете') as HTMLSelectElement;
+    const toAmountInput = screen.getByLabelText('Сколько получаете') as HTMLInputElement;
     expect(toSelect.value).toEqual('JPY');
     expect(toAmountInput.value).toEqual('7.69');
   });
@@ -91,14 +92,15 @@ test('пересчёт конвертации при изменении пары
 
   expect(await screen.findByText('36.05 Japanese yen')).toBeInTheDocument();
 
-  const fromSelect = screen.getByLabelText('Валюта, которую отдаёте') as HTMLSelectElement;
   const toSelect = screen.getByLabelText('Валюта, которую получаете') as HTMLSelectElement;
-  const toAmountInput = screen.getByLabelText('Сколько получаете') as HTMLInputElement;
 
-  expect(fromSelect.value).toEqual('PLN');
+  expect(toSelect.value).toEqual('JPY');
   fireEvent.change(toSelect, { target: { value: 'ZAR' } });
 
   await waitFor(() => {
+    const toSelect = screen.getByLabelText('Валюта, которую получаете') as HTMLSelectElement;
+    const toAmountInput = screen.getByLabelText('Сколько получаете') as HTMLInputElement;
+
     expect(toSelect.value).toEqual('ZAR');
     expect(toAmountInput.value).toEqual('4.69');
   });
@@ -124,6 +126,11 @@ test('пересчёт конвертации при изменении пары
   fireEvent.click(swapButton);
 
   await waitFor(() => {
+    const fromAmountInput = screen.getByLabelText('Сколько отдаёте') as HTMLInputElement;
+    const toAmountInput = screen.getByLabelText('Сколько получаете') as HTMLInputElement;
+    const fromSelect = screen.getByLabelText('Валюта, которую отдаёте') as HTMLSelectElement;
+    const toSelect = screen.getByLabelText('Валюта, которую получаете') as HTMLSelectElement;
+
     expect(fromSelect).toHaveValue('JPY');
     expect(toSelect).toHaveValue('PLN');
     expect(fromAmountInput).toHaveValue('36.05');
@@ -170,7 +177,9 @@ test('reset состояния описания по key при смене па�
   expect(screen.queryByText('Polish zloty')).not.toBeInTheDocument();
   expect(screen.queryByText('Japanese yen')).not.toBeInTheDocument();
 
-  expect(screen.getByText('JPY/PLN: about')).toBeInTheDocument();
+  await waitFor(() => {
+    expect(screen.getByText('JPY/PLN: about')).toBeInTheDocument();
+  });
 });
 
 test('отображение LOADING при загрузке', async () => {
