@@ -1,0 +1,35 @@
+$dark-text-color: #000;
+$light-text-color: #fff;
+$default-button-background: #d9d9d9;
+$active-button-background: #c4d7ff;
+$save-button-background: #3f66bf;
+$clear-button-background: #fa3a3a;
+$radius-button: 10px;
+
+.button {
+  border: none;
+  border-radius: $radius-button;
+
+  color: $dark-text-color;
+  text-align: center;
+
+  cursor: pointer;
+}
+
+.default {
+  background-color: $default-button-background;
+}
+
+.active {
+  background-color: $active-button-background;
+}
+
+.save {
+  background-color: $save-button-background;
+  color: $light-text-color;
+}
+
+.clear {
+  background-color: $clear-button-background;
+  color: $light-text-color;
+}
