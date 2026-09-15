@@ -37,11 +37,3 @@ export const currenciesMocks: Currency[] = [
     symbol: 'R'
   }
 ];
-
-export const getCurrency = (code: string): Currency => {
-  const currency = currenciesMocks.find((c) => c.code === code);
-  if (!currency) {
-    throw new Error(`Валюта ${code} не найдена!`);
-  }
-  return currency;
-};

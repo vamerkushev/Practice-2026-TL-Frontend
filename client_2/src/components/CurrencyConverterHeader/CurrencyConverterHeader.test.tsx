@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import { getCurrency } from '../../mocks/currenciesMocks';
+import { getCurrency } from '../../tools/getCurrency';
 
 import { CurrencyConverterHeader } from './CurrencyConverterHeader';
 
@@ -7,9 +7,9 @@ test('отображает заголовок текущей валютной п
   render(
     <CurrencyConverterHeader
       fromAmountCurrency="1"
-      fromCurrency={getCurrency('PLN')}
+      fromCurrency={getCurrency('PLN')!}
       toAmountCurrency="0.99"
-      toCurrency={getCurrency('JPY')}
+      toCurrency={getCurrency('JPY')!}
       updatedAt="2026-04-27T09:30:00.000Z"
     />
   );

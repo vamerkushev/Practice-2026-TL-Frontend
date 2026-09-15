@@ -1,6 +1,6 @@
 import type { CurrencyPair } from '../types/currencyPair';
 
-export const currencyPairs: CurrencyPair[] = [
+export const currencyPairsMocks: CurrencyPair[] = [
   { fromCurrency: 'PLN', toCurrency: 'CAD' },
   { fromCurrency: 'PLN', toCurrency: 'JPY' }
 ];

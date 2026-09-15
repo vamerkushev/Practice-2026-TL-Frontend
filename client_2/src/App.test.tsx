@@ -1,6 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { test, expect } from 'vitest';
 import { App } from './App';
+import { currenciesMocks } from './mocks/currenciesMocks';
+import userEvent from '@testing-library/user-event';
 
 test('рендер селектов и полей с мок-данными', () => {
   render(<App />);
@@ -18,33 +20,39 @@ test('рендер селектов и полей с мок-данными', () 
   expect(fromSelect).toHaveValue('PLN');
   expect(toSelect).toHaveValue('JPY');
 
-  expect(fromSelect.querySelectorAll('option').length).toBeGreaterThan(0);
-  expect(toSelect.querySelectorAll('option').length).toBeGreaterThan(0);
+  const expectedCodes = currenciesMocks.map((currency) => currency.code);
+  expect(Array.from(fromSelect.querySelectorAll('option')).map((option) => option.value)).toEqual(expectedCodes);
+  expect(Array.from(toSelect.querySelectorAll('option')).map((option) => option.value)).toEqual(expectedCodes);
 });
 
-test('пересчёт конвертации при изменении суммы в меньшую сторону', () => {
+test('пересчёт конвертации при изменении суммы в меньшую сторону', async () => {
+  const user = userEvent.setup();
   render(<App />);
 
   const fromAmountInput = screen.getByLabelText('Сколько отдаёте') as HTMLInputElement;
   const toAmountInput = screen.getByLabelText('Сколько получаете') as HTMLInputElement;
 
   expect(toAmountInput.value).toEqual('36.05');
-  fireEvent.change(fromAmountInput, { target: { value: '0' } });
+  await user.clear(fromAmountInput);
+  await user.type(fromAmountInput, '0');
   expect(toAmountInput.value).toEqual('0.00');
 });
 
-test('пересчёт конвертации при изменении суммы в большую сторону', () => {
+test('пересчёт конвертации при изменении суммы в большую сторону', async () => {
+  const user = userEvent.setup();
   render(<App />);
 
   const fromAmountInput = screen.getByLabelText('Сколько отдаёте') as HTMLInputElement;
   const toAmountInput = screen.getByLabelText('Сколько получаете') as HTMLInputElement;
 
   expect(toAmountInput.value).toEqual('36.05');
-  fireEvent.change(fromAmountInput, { target: { value: '10' } });
+  await user.clear(fromAmountInput);
+  await user.type(fromAmountInput, '10');
   expect(toAmountInput.value).toEqual('360.50');
 });
 
-test('пересчёт конвертации при изменении пары, меняем валюту, которую отдаем', () => {
+test('пересчёт конвертации при изменении пары, меняем валюту, которую отдаем', async () => {
+  const user = userEvent.setup();
   render(<App />);
 
   const fromSelect = screen.getByLabelText('Валюта, которую отдаёте') as HTMLSelectElement;
@@ -52,12 +60,13 @@ test('пересчёт конвертации при изменении пары
   const toAmountInput = screen.getByLabelText('Сколько получаете') as HTMLInputElement;
 
   expect(fromSelect.value).toEqual('PLN');
-  fireEvent.change(fromSelect, { target: { value: 'ZAR' } });
+  await user.selectOptions(fromSelect, 'ZAR');
   expect(toSelect.value).toEqual('JPY');
   expect(toAmountInput.value).toEqual('7.69');
 });
 
-test('пересчёт конвертации при изменении пары, меняем валюту, которую получаем', () => {
+test('пересчёт конвертации при изменении пары, меняем валюту, которую получаем', async () => {
+  const user = userEvent.setup();
   render(<App />);
 
   const fromSelect = screen.getByLabelText('Валюта, которую отдаёте') as HTMLSelectElement;
@@ -65,12 +74,13 @@ test('пересчёт конвертации при изменении пары
   const toAmountInput = screen.getByLabelText('Сколько получаете') as HTMLInputElement;
 
   expect(fromSelect.value).toEqual('PLN');
-  fireEvent.change(toSelect, { target: { value: 'ZAR' } });
+  await user.selectOptions(toSelect, 'ZAR');
   expect(toSelect.value).toEqual('ZAR');
   expect(toAmountInput.value).toEqual('4.69');
 });
 
-test('пересчёт конвертации при изменении пары, меняем их местами через кнопку swap', () => {
+test('пересчёт конвертации при изменении пары, меняем их местами через кнопку swap', async () => {
+  const user = userEvent.setup();
   render(<App />);
 
   const fromAmountInput = screen.getByLabelText('Сколько отдаёте') as HTMLInputElement;
@@ -85,7 +95,7 @@ test('пересчёт конвертации при изменении пары
 
   const swapButton = screen.getByAltText('swap-currencies');
   expect(swapButton).toBeInTheDocument();
-  fireEvent.click(swapButton);
+  await user.click(swapButton);
 
   expect(fromSelect).toHaveValue('JPY');
   expect(toSelect).toHaveValue('PLN');
@@ -110,23 +120,24 @@ test('запрет на одинаковые валюты в паре: в пер
   expect(plnOption).toBeDisabled();
 });
 
-test('reset состояния описания по key при смене пары', () => {
+test('reset состояния описания по key при смене пары', async () => {
+  const user = userEvent.setup();
   render(<App />);
 
   expect(screen.queryByText('Polish zloty')).not.toBeInTheDocument();
   expect(screen.queryByText('Japanese yen')).not.toBeInTheDocument();
 
   const aboutButton = screen.getByTestId('about-button');
-  fireEvent.click(aboutButton);
+  await user.click(aboutButton);
 
   expect(screen.getByText('Polish zloty - PLN - zł')).toBeInTheDocument();
   expect(screen.getByText('Japanese yen - JPY - ¥')).toBeInTheDocument();
 
   const swapButton = screen.getByAltText('swap-currencies');
-  fireEvent.click(swapButton);
+  await user.click(swapButton);
 
-  expect(screen.queryByText('Polish zloty')).not.toBeInTheDocument();
-  expect(screen.queryByText('Japanese yen')).not.toBeInTheDocument();
+  expect(screen.queryByText('Polish zloty - PLN - zł')).not.toBeInTheDocument();
+  expect(screen.queryByText('Japanese yen - JPY - ¥')).not.toBeInTheDocument();
 
   expect(screen.getByText('JPY/PLN: about')).toBeInTheDocument();
 });

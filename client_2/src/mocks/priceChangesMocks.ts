@@ -1,6 +1,6 @@
-import type { PriceChanges } from '../types/priceChanges';
+import type { PriceChange } from '../types/priceChange';
 
-export const priceChangesMocks: Record<string, Record<string, PriceChanges>> = {
+export const priceChangesMocks: Record<string, Record<string, PriceChange>> = {
   CAD: {
     PLN: {
       purchasedCurrencyCode: 'CAD',

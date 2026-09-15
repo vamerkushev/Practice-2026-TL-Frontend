@@ -1,15 +1,15 @@
 import styles from './App.module.scss';
 import { CurrencyConverterHeader } from './components/CurrencyConverterHeader/CurrencyConverterHeader';
-import { CurrencyInput } from '../src/components/CurrencyInput/CurrencyInput';
+import { CurrencyInput } from './components/CurrencyInput/CurrencyInput';
 import { FilterButtons } from './components/FilterButtons/FilterButtons';
 import { CurrencyChart } from './components/CurrencyChart/CurrencyChart';
 import { CurrencyPairsList } from './components/CurrencyPairsList/CurrencyPairsList';
 import { CurrencyInformation } from './components/CurrencyInformation/CurrencyInformation';
-import { currenciesMocks } from '../src/mocks/currenciesMocks';
-import { currencyPairs } from '../src/data/currencyPairs';
+import { currenciesMocks } from './mocks/currenciesMocks';
+import { currencyPairsMocks } from './mocks/currencyPairsMocks';
 import { chartPeriods } from './data/chartPeriods';
 import { useState } from 'react';
-import { useCurrencyConverter } from './hooks/useCurrencyConverter';
+import { convertCurrency } from './tools/convertCurrency';
 import { CurrenciesSwapButton } from './components/CurrenciesSwapButton/CurrenciesSwapButton';
 
 export const App = () => {
@@ -17,18 +17,24 @@ export const App = () => {
   const [toCurrencyCode, setToCurrencyCode] = useState('JPY');
   const [amountFromCurrency, setAmountFromCurrency] = useState('1');
 
-  const { fromCurrency, toCurrency, amountToCurrency, updatedAt } = useCurrencyConverter(
-    fromCurrencyCode,
-    toCurrencyCode,
-    amountFromCurrency
-  );
+  const result = convertCurrency(fromCurrencyCode, toCurrencyCode, amountFromCurrency);
+  if (!result) {
+    return (
+      <main className={styles.page}>
+        <p>
+          Не удалось загрузить данные для пары {fromCurrencyCode}/{toCurrencyCode}!
+        </p>
+      </main>
+    );
+  }
+  const { fromCurrency, toCurrency, amountToCurrency, updatedAt } = result;
 
   const swapCurrencies = () => {
     setFromCurrencyCode(toCurrencyCode);
     setToCurrencyCode(fromCurrencyCode);
   };
 
-  const setValidAmountChange = (value: string) => {
+  const handleAmountChange = (value: string) => {
     if (value === '') {
       setAmountFromCurrency(value);
       return;
@@ -57,7 +63,7 @@ export const App = () => {
             amount={amountFromCurrency}
             currencyCode={fromCurrencyCode}
             currencies={currenciesMocks}
-            onAmountChange={setValidAmountChange}
+            onAmountChange={handleAmountChange}
             onCurrencyChange={setFromCurrencyCode}
             selectedCurrency={toCurrencyCode}
           />
@@ -83,7 +89,7 @@ export const App = () => {
       </div>
 
       <div className={styles['bottom-half']}>
-        <CurrencyPairsList pairs={currencyPairs} activePair={`${fromCurrencyCode}/${toCurrencyCode}`} />
+        <CurrencyPairsList pairs={currencyPairsMocks} activePair={`${fromCurrencyCode}/${toCurrencyCode}`} />
 
         <CurrencyInformation
           key={`${fromCurrencyCode}-${toCurrencyCode}`}
@@ -91,7 +97,7 @@ export const App = () => {
           toCurrency={toCurrency}
         />
         {/* Изменении валютной пары меняет key и приводит к пересозданию компонента. Так как внутри компонента есть хук useState,
-        который сбросит значение isShown, описание при выборе новой валютной пары будет закрыто */}
+        который сбросит значение shown, описание при выборе новой валютной пары будет закрыто */}
       </div>
     </main>
   );

@@ -11,6 +11,7 @@ test('показывает переданную сумму', () => {
       amount="1"
       currencyCode="PLN"
       currencies={currenciesMocks}
+      onCurrencyChange={() => {}}
     />
   );
 
@@ -25,6 +26,7 @@ test('показывает выбранную валюту', () => {
       amount="1"
       currencyCode="PLN"
       currencies={currenciesMocks}
+      onCurrencyChange={() => {}}
     />
   );
 
@@ -39,6 +41,7 @@ test('показывает в списке все переданные валю�
       amount="1"
       currencyCode="PLN"
       currencies={currenciesMocks}
+      onCurrencyChange={() => {}}
     />
   );
 
@@ -55,6 +58,7 @@ test('ничего не зашито внутрь: с другими props по�
       amount="0.99"
       currencyCode="JPY"
       currencies={currenciesMocks}
+      onCurrencyChange={() => {}}
     />
   );
 

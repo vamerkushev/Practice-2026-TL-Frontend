@@ -8,7 +8,7 @@ type CurrencyInputProps = {
   currencyCode: string;
   currencies: Currency[];
   onAmountChange?: (value: string) => void;
-  onCurrencyChange?: (value: string) => void;
+  onCurrencyChange: (value: string) => void;
   readonly?: boolean;
   selectedCurrency?: string;
 };

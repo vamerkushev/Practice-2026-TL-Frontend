@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 
 import { CurrencyPairsList } from './CurrencyPairsList';
-import { currencyPairs } from '../../data/currencyPairs';
+import { currencyPairsMocks } from '../../mocks/currencyPairsMocks';
 
 test('отображает валютные пары', () => {
-  render(<CurrencyPairsList pairs={currencyPairs} activePair="PLN/JPY" />);
+  render(<CurrencyPairsList pairs={currencyPairsMocks} activePair="PLN/JPY" />);
 
-  currencyPairs.forEach(({ fromCurrency, toCurrency }) => {
+  currencyPairsMocks.forEach(({ fromCurrency, toCurrency }) => {
     expect(screen.getByText(`${fromCurrency}/${toCurrency}`)).toBeInTheDocument();
   });
 });
